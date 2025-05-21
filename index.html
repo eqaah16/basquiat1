@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basquiat: The Crowned Rebel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png" />
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+            cursor: url('images/favicon.png'), auto;
+        }
+
+        .section-title {
+          font-size: 2.5rem;
+          color: #fff;
+          text-align: center;
+          margin-bottom: 60px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          position: relative;
+        }
+
+        /* Landing Page */
+        #landing-page {
+            background: url('images/background-image.jpg') no-repeat center center/cover;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+        }
+
+        #landing-page .title {
+            font-size: 9rem;
+            letter-spacing: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
+            color: whitesmoke;
+        }
+
+        #landing-page .intro-text {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        #landing-page .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            font-size: 2rem;
+            color: #F4AB4B;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        #landing-page .scroll-down:hover {
+            transform: translateY(5px);
+            color: yellow;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Timeline Section */
+        #timeline-section {
+          padding: 100px 20px;
+          background: #000;
+          color: #F4AB4B;
+          overflow-x: hidden;
+        }
+
+        .timeline-container {
+          display: flex;
+          overflow-x: scroll;
+          scroll-snap-type: x mandatory;
+          gap: 30px;
+          padding: 20px;
+        }
+
+        .event {
+          flex: 0 0 80vw;
+          scroll-snap-align: center;
+          background: #111;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center;
+          position: relative;
+          transition: transform 0.3s ease;
+        }
+
+        .event img {
+          width: 50%;
+          height: auto;
+          border-radius: 8px;
+        }
+
+        .event:hover {
+          transform: scale(1.05);
+        }
+
+        /* Symbols Section */
+        #symbols {
+            background-color: #1a1a1a;
+            padding: 80px 20px;
+        }
+
+        #symbols h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .symbols-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 45px;
+        }
+
+        .symbol-card {
+            background: #292929;
+            border-radius: 12px;
+            padding: 40px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .symbol-card:hover {
+            background: #444;
+            transform: scale(1.05);
+            cursor: url('images/symbol-cursor.png'), pointer;
+        }
+
+        .symbol-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 0px;
+            transition: transform 0.3s ease;
+        }
+
+        .symbol-card:hover img {
+            transform: scale(1.2);
+        }
+
+        .symbol-info {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            color: #ffcc00;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        .symbol-card:hover .symbol-info {
+            opacity: 1;
+        }
+
+        /* Legacy Section */
+        .legacy-section {
+          background: url('images/basquiat-bg.jpg') center center / cover no-repeat;
+          background-attachment: fixed;
+          padding: 60px 20px;
+          text-align: center;
+          color: white;
+          position: relative;
+          z-index: 1;
+        }
+
+        .legacy-section::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.7); /* dark overlay for readability */
+          z-index: -1;
+        }
+
+        .legacy-section h2 {
+          font-size: 2.5rem;
+          color: #F4AB4B;
+          margin-bottom: 40px;
+        }
+
+        .legacy-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 20px;
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+
+        .legacy-card {
+          position: relative;
+          background: #2d2d2d;
+          padding: 25px 20px 25px 50px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          transition: transform 0.3s ease, background 0.3s ease;
+          overflow: hidden;
+        }
+
+        .legacy-card::before {
+          content: "❝";
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          font-size: 2.5rem;
+          color: #F4AB4B;
+          animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+
+        /* Create Like Basquiat Section */
+        #create-like-basquiat {
+            padding: 60px 20px;
+            background-color: #1f1f1f;
+            text-align: center;
+            color: white;
+        }
+
+        #create-like-basquiat h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .create-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .create-container p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .create-button, .clear-button {
+            padding: 15px 30px;
+            background-color: #F4AB4B;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        .create-button:hover, .clear-button:hover {
+            background-color: #9F4030;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 15px;
+        }
+
+        #drawingCanvas {
+            display: none;
+            margin-top: 30px;
+            border: 3px solid #9F4030;
+            background: #000;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <section id="landing-page">
+        <h1 class="title">BASQUIAT</h1>
+        <a href="#timeline" class="scroll-down">↓</a>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline-section">
+      <h2 class="section-title">The Life of Jean-Michel Basquiat</h2>
+      <div class="timeline-container">
+        <div class="event">
+          <img src="images/basquiat-childhood.jpg" alt="Basquiat Childhood">
+          <h3>1960</h3>
+          <p>Basquiat was born on 22 December 1960 in Brooklyn, New York. His mother was of Haitian descent and his father was Puerto Rican. He also had two younger sisters. From an early age, his mother encouraged him to appreciate the arts by regularly taking him to museums throughout Manhattan. It was also noted that he was quite gifted from a very early age. Basquiat supposedly learned to read and write when he was only four years old. He could speak French, Spanish and English well before his teenage years. He soon turned this formidable intelligence towards art.</p>
+        </div>
+        <div class="event">
+          <img src="images/museum.jpg" alt="Enrolled Museum">
+          <h3>1967</h3>
+          <p>He was enrolled in the Brooklyn Museum of Art (as a junior member) and when he was only seven, he began studying in a prestigious art school near his home. It was here that he entered into his first real artistic endeavour. Along with a classmate, he published a short children's book. Basquiat also began developing a talent for athletics; particularly in track and field events.</p>
+        </div>
+        <div class="event">
+          <img src="images/basquiat-samo.jpg" alt="SAMO Era">
+          <h3>1978</h3>
+          <p>SAMO graffiti appears in NYC. Under the pseudonym SAMO (short for “Same Old Shit”), he collaborated with his friend Al Diaz to create thought-provoking and often cryptic messages on New York City walls. As a teenager, Basquiat gained attention for its thought-provoking messages and distinctive style. This period laid the foundation for Basquiat’s exploration of graffiti’s expressive power and potential to convey social and political commentary.</p>
+        </div>
+        <div class="event">
+          <img src="images/basquiat-first-exhibition.png" alt="First Exhibition">
+          <h3>1981</h3>
+          <p>First major solo exhibition. Basquiat was picked up by his first New York dealer, Annina Nosei, whose SoHo gallery had opened in 1980. She also gave the young painter his first proper studio in the gallery’s basement, as well as a slew of large-scale canvases and “access to all the materials he needed, including high-quality paints,” said art dealer Jeffrey Deitch, who knew Basquiat in the ’80s and read the artist’s eulogy at his funeral after his untimely death in 1988, at the age of 27.</p>
+        </div>
+        <div class="event">
+          <img src="images/riding-with-death.jpg" alt="Last Exhibition">
+          <h3>1981</h3>
+          <p>Basquiat's last artwork before his death. Many contemporaries observe that the death of Andy Warhol in 1987 had a profound effect upon the demeanour and emotional state of Basquiat. He became depressed more frequently and as a result, his use of heroin increased. It should still be mentioned that he made several attempts to become sober; the final effort during a trip to Hawaii. He died of a heroin overdose on 12 August 1988. At the time, he was only 27 years old.</p>
+        </div>
+        <!-- Add more events -->
+      </div>
+    </section>
+
+    <!-- Symbols Section -->
+    <section id="symbols">
+        <h2 class="section-title">Symbols of Basquiat</h2>
+        <div class="symbols-grid">
+            <div class="symbol-card">
+                <img src="images/crown.png" alt="Crown Icon">
+                <div class="symbol-info">
+                    <h3>Crown</h3>
+                    <p>Symbol of Black excellence and royalty. Basquiat used it to honor heroes.</p>
+                </div>
+            </div>
+            <div class="symbol-card">
+                <img src="images/skull.jpg" alt="Skull Icon">
+                <div class="symbol-info">
+                    <h3>Skull</h3>
+                    <p>Represents the mortality, identity, and inner psychology.</p>
+                </div>
+            </div>
+            <div class="symbol-card">
+                <img src="images/dino.jpg" alt="Dinosaur Icon">
+                <div class="symbol-info">
+                    <h3>Dinosaur</h3>
+                    <p>A symbol of strength, extinction, and historical legacy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Section -->
+    <section class="legacy-section" id="legacy">
+      <h2 class="section-title">Basquiat’s Lasting Impact</h2>
+      <div class="legacy-grid">
+        <div class="legacy-card">
+          <p>“He’s the king of the downtown scene.”</p>
+          <span>– Jay-Z</span>
+        </div>
+        <div class="legacy-card">
+          <p>Basquiat’s work has influenced designers like Virgil Abloh and artists like Banksy.</p>
+        </div>
+        <div class="legacy-card">
+          <p>He was the youngest artist ever to exhibit at Documenta in Germany (age 22).</p>
+        </div>
+        <div class="legacy-card">
+          <p>“He spoke in colors and symbols that hit harder than words.”</p>
+          <span>– Kehinde Wiley</span>
+        </div>
+        <div class="legacy-card">
+          <p>Madonna (then - still unknown), was Basquiat's girlfriend.</p>
+        </div>
+        <div class="legacy-card">
+          <p>The "ANTI" album cover for Rihanna's album is inspired by Basquiat's SAMO tag.</p>
+        </div>
+        <!-- Add more cards as you wish -->
+      </div>
+    </section>
+
+    <!-- Create Like Basquiat Section -->
+    <section id="create-like-basquiat">
+        <h2 class="section-title">Unleash Your Inner Rebel!</h2>
+        <div class="create-container">
+            <p>Create like Basquiat. Use our interactive tool to draw graffiti-inspired art, Basquiat-style.</p>
+            <button class="create-button" onclick="toggleCanvas()">Launch the Graffiti Canvas</button>
+            <button class="clear-button" onclick="clearCanvas()">Clear Canvas</button>
+            <p class="note">More features coming soon!</p>
+            <canvas id="drawingCanvas" width="600" height="400"></canvas>
+        </div>
+    </section>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        function toggleCanvas() {
+            canvas.style.display = canvas.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function startPosition(e) {
+            painting = true;
+            draw(e);
+        }
+
+        function endPosition() {
+            painting = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!painting) return;
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#F4AB4B';
+
+            const rect = canvas.getBoundingClientRect();
+            let x, y;
+
+            if (e.touches) {
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('touchstart', startPosition);
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', draw);
+    </script>
+
+</body>
+</html>
